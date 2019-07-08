@@ -14,8 +14,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "department")
+@Getter @Setter
+@ToString
 public class Department implements Serializable{
 	
 	@Id
@@ -26,45 +32,15 @@ public class Department implements Serializable{
 	@Column(name = "department_name")
 	private String departmentName;
 	
-	@OneToMany(mappedBy = "department", cascade =  {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "department", cascade =  {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST
+			,CascadeType.REFRESH,CascadeType.REMOVE})
 	@JsonManagedReference
 	private List<Employee> employees;
 	
-	public Department(){
-		
-	}
+	public Department(){}
 	
 	public Department(String departmentName) {
 		this.departmentName = departmentName;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
-
-	public String getDepartmentName() {
-		return departmentName;
-	}
-
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
-	}
-
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", departmentName=" + departmentName +"]";
 	}
 
 }

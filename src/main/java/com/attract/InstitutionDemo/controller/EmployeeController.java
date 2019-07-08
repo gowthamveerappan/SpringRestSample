@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.attract.InstitutionDemo.Entity.Department;
 import com.attract.InstitutionDemo.Entity.Employee;
+import com.attract.InstitutionDemo.Entity.EmployeeDesignation;
 import com.attract.InstitutionDemo.Service.DepartmentServiceImpl;
 import com.attract.InstitutionDemo.Service.EmployeeServiceImpl;
 
@@ -35,6 +36,27 @@ public class EmployeeController {
 	public List<Employee> getEmployees() {
 		return employeeServiceImpl.findAll();
 	}
+	
+	@GetMapping("findGtGivenSalaryByDepartment/{departmentId}")
+	public List<Employee> findGtGivenSalaryByDepartment(@PathVariable Integer departmentId) {
+		return employeeServiceImpl.findGtGivenSalaryByDepartment(departmentId);
+	}
+	
+	@GetMapping("findGtGivenSalary")
+	public List<Employee> findGtGivenSalary() {
+		return employeeServiceImpl.findGtGivenSalary();
+	}
+	
+	@GetMapping("findByDesignation/{designation}")
+	public List<Employee> findByDesignation(@PathVariable EmployeeDesignation designation) {
+		return employeeServiceImpl.findByDesignation(designation);
+	}
+	
+	@GetMapping("findByEmployeeId/{employeeId}")
+	public List<Employee> findByEmployeeId(@PathVariable Integer employeeId) {
+		return employeeServiceImpl.findByEmployeeId(employeeId);
+	}	
+	
 	
 	@GetMapping("/{employeeId}")
 	public Employee getEmployees(@PathVariable Integer employeeId) {
@@ -61,6 +83,7 @@ public class EmployeeController {
 		Employee employee = employeeServiceImpl.findById(employeeId);
 		
 		Department department = departmentServiceImpl.findById(departmentId);
+		department.setId(departmentId);
 		employee.setDepartment(department);
 		
 		return employeeServiceImpl.save(employee);
